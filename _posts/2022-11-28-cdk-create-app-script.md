@@ -5,7 +5,8 @@ layout: post
 ```bash
 #! /bin/bash
 
-cdk init --language=typescript
+set -e
+npx cdk init --language=typescript
 git branch -m main
 npm i -D eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser
 npm i -D prettier eslint-config-prettier eslint-plugin-prettier
@@ -44,9 +45,12 @@ describe("Stack test", () => {
     const stack = new SampleProject.SampleProjectStack(app, "MyTestStack");
 
     const template = Template.fromStack(stack);
-    expect(template.toJSON).toMatchSnapshot();
+    expect(template.toJSON()).toMatchSnapshot();
   });
 });
 EOF
 
 ```
+
+npm run lint -- --fix
+npm run test
